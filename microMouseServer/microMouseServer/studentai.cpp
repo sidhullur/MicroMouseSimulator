@@ -1,6 +1,8 @@
 
 #include "micromouseserver.h"
 
+static int count = 0;
+
 void microMouseServer::studentAI()
 {
 /*
@@ -21,5 +23,25 @@ void microMouseServer::studentAI()
  * void foundFinish();
  * void printUI(const char *mesg);
 */
+    if (isWallRight() && !isWallForward())
+    {
+        moveForward();
+    }
+    if (!isWallRight())
+    {
+        turnRight();
+        moveForward();
+    }
+    if (isWallRight() && isWallForward())
+    {
+        turnLeft();
+        moveForward();
+        count = count + 1;
+    }
+    if (count == 3)
+    {
+        foundFinish();
+    }
 
 }
+

@@ -1,10 +1,12 @@
 
 #include "micromouseserver.h"
 
-static int count = 0;
+
 
 void microMouseServer::studentAI()
 {
+
+    static int count = 0;
 /*
  * The following are the eight functions that you can call. Feel free to create your own fuctions as well.
  * Remember that any solution that calls moveForward more than once per call of studentAI() will have points deducted.
@@ -58,18 +60,21 @@ void microMouseServer::studentAI()
         moveForward();
         count = 0;
     }
+
     if (isWallLeft() && !isWallRight())
     {
         turnRight();
         moveForward();
         count = 0;
     }
+
     if (!isWallLeft() && isWallRight())
     {
         turnLeft();
         moveForward();
         count = 0;
     }
+
     if (isWallRight() && isWallForward())
     {
         turnLeft();

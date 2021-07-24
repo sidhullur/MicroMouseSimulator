@@ -23,14 +23,23 @@ void microMouseServer::studentAI()
  * void foundFinish();
  * void printUI(const char *mesg);
 */
+    /*
     if (isWallRight() && !isWallForward())
     {
         moveForward();
+        count = 0;
     }
     if (!isWallRight())
     {
         turnRight();
         moveForward();
+        count = 0;
+    }
+    if (isWallRight() && isWallForward() && isWallLeft())
+    {
+        turnLeft();
+        turnLeft();
+        count = 0;
     }
     if (isWallRight() && isWallForward())
     {
@@ -38,6 +47,42 @@ void microMouseServer::studentAI()
         moveForward();
         count = count + 1;
     }
+    if (count == 3)
+    {
+        foundFinish();
+    }
+    */
+
+    if (!isWallForward() && isWallLeft() && isWallRight())
+    {
+        moveForward();
+        count = 0;
+    }
+    if (isWallLeft() && !isWallRight())
+    {
+        turnRight();
+        moveForward();
+        count = 0;
+    }
+    if (!isWallLeft() && isWallRight())
+    {
+        turnLeft();
+        moveForward();
+        count = 0;
+    }
+    if (isWallRight() && isWallForward())
+    {
+        turnLeft();
+        moveForward();
+        count = count + 1;
+    }
+    if (isWallLeft() && isWallForward())
+    {
+        turnRight();
+        moveForward();
+        count = count + 1;
+    }
+
     if (count == 3)
     {
         foundFinish();

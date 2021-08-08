@@ -1,5 +1,7 @@
 
 #include "micromouseserver.h"
+#include <iostream>
+using namespace std;
 
 void microMouseServer::studentAI()
 {
@@ -17,25 +19,10 @@ void microMouseServer::studentAI()
     static int left;
     static int right;
     static int forward;
-/*
- * The following are the eight functions that you can call. Feel free to create your own fuctions as well.
- * Remember that any solution that calls moveForward more than once per call of studentAI() will have points deducted.
- *
- *The following functions return if there is a wall in their respective directions
- *bool isWallLeft();
- *bool isWallRight();
- *bool isWallForward();
- *
- *The following functions move the mouse. Move forward returns if the mouse was able to move forward and can be used for error checking
- *bool moveForward();
- *void turnLeft();
- *void turnRight();
- *
- * The following functions are called when you need to output something to the UI or when you have finished the maze
- * void foundFinish();
- * void printUI(const char *mesg);
-*/
+
     /*
+
+    // Unislanded Maze Solution:
     if (isWallRight() && !isWallForward())
     {
         moveForward();
@@ -65,21 +52,22 @@ void microMouseServer::studentAI()
     }
     */
 
+    // Islanded Maze Solution
     grid[x][y]++;
 
     if (direction == 0) {
         left = grid[x-1][y];
         right = grid[x+1][y];
         forward = grid[x][y+1];
-    } else if (direction = 1) {
+    } else if (direction == 1) {
         left = grid[x][y+1];
         right = grid[x][y-1];
         forward = grid[x+1][y];
-    } else if (direction = 2) {
+    } else if (direction == 2) {
         left = grid[x+1][y];
         right = grid[x-1][y];
         forward = grid[x][y-1];
-    } else if (direction = 3) {
+    } else if (direction == 3) {
         left = grid[x][y-1];
         right = grid[x][y+1];
         forward = grid[x-1][y];
@@ -87,8 +75,9 @@ void microMouseServer::studentAI()
 
     if (count == 4) {
         foundFinish();
-    } else if (!isWallLeft() && left <= forward && left <= right) {
+    } else if (!isWallLeft() && ((left <= forward && left <= right) || (isWallRight() && isWallForward()))) {
         turnLeft();
+        count = 0;
 
         if (direction == 0) direction = 3;
         else direction--;
@@ -99,9 +88,7 @@ void microMouseServer::studentAI()
         else if (direction == 1) x++;
         else if (direction == 2) y--;
         else x--;
-
-        count++;
-    } else if (!isWallForward() && forward <= right && forward <= left) {
+    } else if (!isWallForward() && (forward <= right || (isWallLeft() && isWallRight()))) {
         count = 0;
         moveForward();
 
@@ -110,9 +97,9 @@ void microMouseServer::studentAI()
         else if (direction == 2) y--;
         else x--;
 
-    } else if (!isWallRight() && right <= forward && right <= left) {
-        count = 0;
+    } else if (!isWallRight() && ((right <= left && right <= forward) || (isWallLeft() && isWallForward()))) {
         turnRight();
+        count++;
 
         if (direction == 3) direction = 0;
         else direction++;
